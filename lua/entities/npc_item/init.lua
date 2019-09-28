@@ -19,14 +19,6 @@ function ENT:Initialize()
 	self:SetMoveType( MOVETYPE_VPHYSICS )
 	self:SetSolid( SOLID_VPHYSICS )
 	self:SetUseType( SIMPLE_USE )
-	self:SetHealth( GetConVar( "Craft_Config_MaxHealth" ):GetInt() )
-	self:SetMaxHealth( GetConVar( "Craft_Config_MaxHealth" ):GetInt() )
-	self:SetTrigger( true )
-	self:SetColor( CRAFT_CONFIG_COLOR )
-
-	if GetConVar( "Craft_Config_Material" ):GetString() != "" then
-		self:SetMaterial( GetConVar( "Craft_Config_Material" ):GetString() )
-	end
 	
     local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
