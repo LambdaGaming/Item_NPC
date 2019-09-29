@@ -1,6 +1,6 @@
 
-ENT.Type = "anim"
-ENT.Base = "base_gmodentity"
+ENT.Type = "ai"
+ENT.Base = "base_ai"
 ENT.PrintName = "Item NPC"
 ENT.Author = "Lambda Gaming"
 ENT.Spawnable = true
@@ -11,49 +11,30 @@ function ENT:SetupDataTables()
 end
 
 ItemNPC = {} --Initializes the item table, don't touch
-ItemNPCCategory = {} --Initializes the category table, don't touch
 ItemNPCType = {} --Initializes the type table, don't touch
 
 --Template Type
 --[[
 	ItemNPCType[1] = {
-		Name = "Template NPC Type" --Name of the NPC type
-		Model = "models/breen.mdl" --Model of the NPC
-		Restriction = { TEAM_MAYOR, TEAM_CHIEF } --Jobs that are allowed to use the NPC, leave empty brackets for all jobs
+		Name = "Template NPC Type", --Name of the NPC type
+		Model = "models/breen.mdl", --Model of the NPC
+		MenuColor = Color( 49, 53, 61, 200 ), --Color of the menu background
+		ButtonColor = Color( 230, 93, 80, 255 ), --Color of the buttons
+		ButtonTextColor = color_white, --Color of the button text
+		Allowed = { --Jobs that are allowed to use the NPC, leave empty brackets for all jobs
+			[TEAM_MAYOR] = true,
+			[TEAM_CHIEF] = true
+		}
 	}
 ]]
 
---Template Category
---[[
-	ItemNPCCategory[1] = { --Be sure to change the number, the lower the number, the higher up in the list it is
-		Name = "Pistols", --Name of the category
-		Color = Color( 49, 53, 61, 255 ) --Color of the category box
-	}
-]]
-
-ItemNPCCategory[1] = {
-	Name = "Pistols",
-	Color = Color( 49, 53, 61, 255 )
-}
-
-ItemNPCCategory[2] = {
-	Name = "SMGs",
-	Color = Color( 49, 53, 61, 255 )
-}
-
-ItemNPCCategory[3] = {
-	Name = "Rifles",
-	Color = Color( 49, 53, 61, 255 )
-}
-
-ItemNPCCategory[4] = {
-	Name = "Shotguns",
-	Color = Color( 49, 53, 61, 255 )
-}
-
-ItemNPCCategory[5] = {
-	Name = "Tools",
-	Color = Color( 49, 53, 61, 255 )
+ItemNPCType[1] = {
+	Name = "Template NPC Type",
+	Model = "models/breen.mdl",
+	MenuColor = Color( 49, 53, 61, 200 ),
+	ButtonColor = Color( 230, 93, 80, 255 ),
+	ButtonTextColor = color_white,
+	Allowed = {}
 }
 
 --Template Crafting Item
