@@ -49,33 +49,23 @@ function ENT:AcceptInput( input, activator )
 	net.Send( activator )
 end
 
-util.AddNetworkString( "StartCrafting" )
-util.AddNetworkString( "CraftMessage" )
-net.Receive( "StartCrafting", function( len, ply )
+util.AddNetworkString( "CreateItem" )
+net.Receive( "CreateItem", function( len, ply )
 	local self = net.ReadEntity()
 	local ent = net.ReadString()
-	local entname = net.ReadString()
 	local SpawnItem = ItemNPC[ent].SpawnFunction
 	local money = ply:getDarkRPVar( "money" )
+	local name = ItemNPC[ent].Name
 	local price = ItemNPC[ent].Price
 	if money >= price then
 		if SpawnItem then
 			SpawnItem( ply, self )
-			self:EmitSound( GetConVar( "Craft_Config_Craft_Sound" ):GetString() )
-			net.Start( "CraftMessage" )
-			net.WriteBool( validfunction )
-			net.WriteString( entname )
-			net.Send( ply )
+			DarkRP.notify( ply, 0, 6, "You have purchased a "..name.."." )
 		else
-			net.Start( "CraftMessage" )
-			net.WriteBool( validfunction )
-			net.WriteString( entname )
-			net.Send( ply )
+			DarkRP.notify( ply, 1, 6, "ERROR: SpawnFunction for this item not detected!" )
 			return
 		end
-		for k,v in pairs( CraftMaterials ) do
-			self:SetNWInt( "Craft_"..k, self:GetNWInt( "Craft_"..k ) - v ) --Only removes required materials
-		end
+		ply:addMoney( -price )
 	else
 		DarkRP.notify( ply, 1, 6, "You don't have enough money to purchase this item!" )
 	end

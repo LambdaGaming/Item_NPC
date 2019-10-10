@@ -19,6 +19,7 @@ ItemNPCType = {} --Initializes the type table, don't touch
 		Name = "Template NPC Type", --Name of the NPC type
 		Model = "models/breen.mdl", --Model of the NPC
 		MenuColor = Color( 49, 53, 61, 200 ), --Color of the menu background
+		MenuTextColor = color_white, --Color of the menu background text
 		ButtonColor = Color( 230, 93, 80, 255 ), --Color of the buttons
 		ButtonTextColor = color_white, --Color of the button text
 		Allowed = { --Jobs that are allowed to use the NPC, leave empty brackets for all jobs
@@ -32,6 +33,7 @@ ItemNPCType[1] = {
 	Name = "Template NPC Type",
 	Model = "models/breen.mdl",
 	MenuColor = Color( 49, 53, 61, 200 ),
+	MenuTextColor = color_white,
 	ButtonColor = Color( 230, 93, 80, 255 ),
 	ButtonTextColor = color_white,
 	Allowed = {}
@@ -57,9 +59,10 @@ ItemNPCType[1] = {
 
 ItemNPC["weapon_glock2"] = {
 	Name = "Glock",
-	Description = "Small pistol",
-	Category = "Pistols",
+	Description = "Small 9mm pistol",
+	Model = "models/weapons/w_pist_glock18.mdl",
 	Price = 100,
+	Type = 1,
 	SpawnFunction =
 		function( ply, self )
 			ply:Give( "weapon_glock2" )
@@ -68,9 +71,10 @@ ItemNPC["weapon_glock2"] = {
 
 ItemNPC["weapon_m42"] = {
 	Name = "M4",
-	Description = "Requires 3 iron.",
-	Category = "Rifles",
+	Description = "Large .223 rifle",
+	Model = "models/weapons/w_rif_m4a1.mdl",
 	Price = 600,
+	Type = 1,
 	SpawnFunction =
 		function( ply, self )
 			ply:Give( "weapon_m42" )
@@ -79,9 +83,10 @@ ItemNPC["weapon_m42"] = {
 
 ItemNPC["weapon_mac102"] = {
 	Name = "MAC 10",
-	Description = "Requires 2 iron.",
-	Category = "SMGs",
+	Description = "Small 9mm SMG",
+	Model = "models/weapons/w_smg_mac10.mdl",
 	Price = 200,
+	Type = 1,
 	SpawnFunction =
 		function( ply, self )
 			ply:Give( "weapon_mac102" )
@@ -90,9 +95,10 @@ ItemNPC["weapon_mac102"] = {
 
 ItemNPC["weapon_mp52"] = {
 	Name = "MP5",
-	Description = "Requires 2 iron.",
-	Category = "SMGs",
+	Description = "Large 9mm SMG",
+	Model = "models/weapons/w_smg_mp5.mdl",
 	Price = 300,
+	Type = 1,
 	SpawnFunction =
 		function( ply, self )
 			ply:Give( "weapon_mp52" )
@@ -101,9 +107,10 @@ ItemNPC["weapon_mp52"] = {
 
 ItemNPC["weapon_p2282"] = {
 	Name = "P228",
-	Description = "Requires 1 iron.",
-	Category = "Pistols",
+	Description = "Small 9mm pistol",
+	Model = "models/weapons/w_pist_p228.mdl",
 	Price = 100,
+	Type = 1,
 	SpawnFunction =
 		function( ply, self )
 			ply:Give( "weapon_p2282" )
@@ -112,9 +119,10 @@ ItemNPC["weapon_p2282"] = {
 
 ItemNPC["weapon_pumpshotgun2"] = {
 	Name = "Pump Shotgun",
-	Description = "Requires 4 iron.",
-	Category = "Shotguns",
+	Description = "12 guage shotgun",
+	Model = "models/weapons/w_shot_m3super90.mdl",
 	Price = 800,
+	Type = 1,
 	SpawnFunction =
 		function( ply, self )
 			ply:Give( "weapon_pumpshotgun2" )
@@ -123,9 +131,10 @@ ItemNPC["weapon_pumpshotgun2"] = {
 
 ItemNPC["lockpick"] = {
 	Name = "Lockpick",
-	Description = "Requires 1 iron.",
-	Category = "Tools",
+	Description = "Tool to pick through locked doors",
+	Model = "models/weapons/w_crowbar.mdl",
 	Price = 150,
+	Type = 1,
 	SpawnFunction =
 		function( ply, self )
 			ply:Give( "lockpick" )
@@ -134,9 +143,10 @@ ItemNPC["lockpick"] = {
 
 ItemNPC["ls_sniper"] = {
 	Name = "Silenced Sniper Rifle",
-	Description = "Requires 5 iron.",
-	Category = "Rifles",
+	Description = "Large sniper rifle",
+	Model = "models/weapons/w_snip_g3sg1.mdl",
 	Price = 600,
+	Type = 1,
 	SpawnFunction =
 		function( ply, self )
 			ply:Give( "ls_sniper" )
@@ -145,9 +155,10 @@ ItemNPC["ls_sniper"] = {
 
 ItemNPC["weapon_ak472"] = {
 	Name = "AK-47",
-	Description = "Requires 4 iron and 2 wood.",
-	Category = "Rifles",
+	Description = "Large rifle",
+	Model = "models/weapons/w_rif_ak47.mdl",
 	Price = 600,
+	Type = 1,
 	SpawnFunction =
 		function( ply, self )
 			ply:Give( "weapon_ak472" )
@@ -156,20 +167,22 @@ ItemNPC["weapon_ak472"] = {
 
 ItemNPC["weapon_deagle2"] = {
 	Name = "Deagle",
-	Description = "Requires 2 iron.",
-	Category = "Pistols",
+	Description = "Large pistol",
+	Model = "models/weapons/w_pist_deagle.mdl",
 	Price = 400,
+	Type = 1,
 	SpawnFunction =
 		function( ply, self )
-			ply:Give( "weapon_deagle" )
+			ply:Give( "weapon_deagle2" )
 		end
 }
 
 ItemNPC["weapon_fiveseven2"] = {
 	Name = "FiveSeven",
-	Description = "Requires 1 iron.",
-	Category = "Pistols",
+	Description = "Small pistol",
+	Model = "models/weapons/w_pist_fiveseven.mdl",
 	Price = 200,
+	Type = 1,
 	SpawnFunction =
 		function( ply, self )
 			ply:Give( "weapon_fiveseven2" )
