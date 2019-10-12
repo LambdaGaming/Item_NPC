@@ -53,11 +53,13 @@ util.AddNetworkString( "CreateItem" )
 net.Receive( "CreateItem", function( len, ply )
 	local self = net.ReadEntity()
 	local ent = net.ReadString()
+	local SpawnCheck = ItemNPC[ent].SpawnCheck
 	local SpawnItem = ItemNPC[ent].SpawnFunction
 	local money = ply:getDarkRPVar( "money" )
 	local name = ItemNPC[ent].Name
 	local price = ItemNPC[ent].Price
 	if money >= price then
+		if SpawnCheck and SpawnCheck( ply, self ) == false then return end
 		if SpawnItem then
 			SpawnItem( ply, self )
 			DarkRP.notify( ply, 0, 6, "You have purchased a "..name.."." )

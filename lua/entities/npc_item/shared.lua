@@ -30,7 +30,7 @@ ItemNPCType = {} --Initializes the type table, don't touch
 ]]
 
 ItemNPCType[1] = {
-	Name = "Template NPC Type",
+	Name = "DarkRP Weapon Dealer",
 	Model = "models/breen.mdl",
 	MenuColor = Color( 49, 53, 61, 200 ),
 	MenuTextColor = color_white,
@@ -39,14 +39,21 @@ ItemNPCType[1] = {
 	Allowed = {}
 }
 
---Template Crafting Item
+--Template Item
 --[[
 	ItemNPC["weapon_crowbar"] = { --Add the entity name of the item in the brackets with quotes
-	Name = "Crowbar", --Name of the item, different from the item's entity name
-	Description = "Tool you can swing", --Description of the item
-	Category = "Tools", --Category the item shows up in, has to match the name of a category created above
-	Price = 100 --Price of the item
-	SpawnFunction = --Function to spawn the item, don't modify anything outside of the entity name unless you know what you're doing
+	Name = "Crowbar", --Name of the item, different from the item's entity name (Required)
+	Description = "Tool you can swing", --Description of the item (Required)
+	Price = 100, --Price of the item (Required, set to 0 if you want to make the item free)
+	Type = 1, --NPC type that this item will be associated with (Required, keep at 1 if you haven't added new types)
+	SpawnCheck = --Function that gets called before the item is spawned, useful for checking things like team-specific items (Optional, removing this will cause the spawn check to not run on the item)
+		function( ply, self )
+			if ply:Team() == TEAM_MAYOR then
+				return false --Prevents the mayor job from buying this item
+			end
+			return true --If the check above passes, then return true. Always leave this here, even if you don't add a check
+		end,
+	SpawnFunction = --Function to spawn the item, don't modify anything outside of the entity name unless you know what you're doing (Required)
 		function( ply, self ) --In this function you are able to modify the player who is crafting, the table itself, and the item that is being crafted
 			local e = ents.Create( "weapon_crowbar" ) --Replace the entity name with the one at the very top inside the brackets
 			e:SetPos( self:GetPos() - Vector( 0, 0, -5 ) ) --A negative Z coordinate is added here to prevent items from spawning on top of the table and being consumed, you'll have to change it if you use a different model otherwise keep it as it is
