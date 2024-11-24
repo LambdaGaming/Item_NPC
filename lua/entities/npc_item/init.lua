@@ -66,13 +66,16 @@ net.Receive( "CreateItem", function( len, ply )
 	local spawnFunc = ItemNPC[item].SpawnFunc
 	local money = DarkRP and ply:getDarkRPVar( "money" ) or nil
 	if canBuy and canBuy( ply, self ) == false then return end
-	if hook.Run( "ItemNPC_CanBuy", ply, ItemNPC[item] ) == false then return end
+	if hook.Run( "ItemNPC_CanBuy", ply, self, item ) == false then return end
+	local newPrice = hook.Run( "ItemNPC_ModifyPrice", ply, self, item )
+	price = newPrice or price
 	if money and money < price then
 		Notify( ply, 1, 6, "You don't have enough money to purchase this item!" )
 		return
 	end
 	if give then
 		ply:Give( give )
+		hook.Run( "ItemNPC_PostBuy", ply, self, item, price )
 	end
 	if class then
 		if max and max > 0 and #ents.FindByClass( class ) >= max then
@@ -86,7 +89,7 @@ net.Receive( "CreateItem", function( len, ply )
 		if spawnFunc then
 			spawnFunc( ply, e )
 		end
-		hook.Run( "ItemNPC_PostBuy", ply, ItemNPC[item], e )
+		hook.Run( "ItemNPC_PostBuy", ply, self, item, price, e )
 	end
 	Notify( ply, 0, 6, "You have purchased a "..name.."." )
 	if DarkRP then
