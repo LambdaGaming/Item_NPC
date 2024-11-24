@@ -1,4 +1,3 @@
-
 include('shared.lua')
 
 surface.CreateFont( "ItemNPCTitleFont", {
@@ -50,7 +49,7 @@ local function DrawItemMenu( ent ) --Panel that draws the main menu
 		mainbuttons.DoClick = function()
 			net.Start( "CreateItem" )
 			net.WriteEntity( ent )
-			net.WriteString( k )
+			net.WriteInt( k, 15 ) --Max 16k items
 			net.SendToServer()
 			mainframe:Close()
 		end
