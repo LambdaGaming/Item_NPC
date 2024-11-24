@@ -64,6 +64,7 @@ net.Receive( "CreateItem", function( len, ply )
 	local class = ItemNPC[item].SpawnClass
 	local offset = ItemNPC[item].SpawnOffset
 	local spawnFunc = ItemNPC[item].SpawnFunc
+	local spawnOverride = ItemNPC[item].SpawnOverride
 	local money = DarkRP and ply:getDarkRPVar( "money" ) or nil
 	if canBuy and canBuy( ply, self ) == false then return end
 	if hook.Run( "ItemNPC_CanBuy", ply, self, item ) == false then return end
@@ -77,7 +78,10 @@ net.Receive( "CreateItem", function( len, ply )
 		ply:Give( give )
 		hook.Run( "ItemNPC_PostBuy", ply, self, item, price )
 	end
-	if class then
+	if spawnOverride then
+		spawnOverride( ply, self )
+		hook.Run( "ItemNPC_PostBuy", ply, self, item, price )
+	elseif class then
 		if max and max > 0 and #ents.FindByClass( class ) >= max then
 			Notify( ply, 1, 6, "Global limit reached. Remove some instances of this entity to spawn it again." )
 			return

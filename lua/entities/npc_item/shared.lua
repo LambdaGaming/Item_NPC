@@ -41,6 +41,11 @@ ItemNPC[1] = {
 	SpawnOffset = Vector( 0, 0, 10 ),	--Offset vector that the item should spawn at, relative to the NPC; Useful for big items that tend to spawn under the map
 	SpawnFunc = function( ply, item )	--Function to make further modifications to the item after spawning
 		item:SetColor( Color( 0, 255, 0 ) )
+	end,
+	SpawnOverride = function( ply, self ) --Function to override the default spawning behavior; Ignores Max, SpawnClass, SpawnOffset, and SpawnFunc
+		local e = ents.Create( "weapon_shipment" )
+		e:SetPos( npc:GetPos() )
+		e:Spawn()
 	end
 }
 ]]
