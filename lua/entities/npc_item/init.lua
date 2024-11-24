@@ -56,8 +56,8 @@ util.AddNetworkString( "CreateItem" )
 net.Receive( "CreateItem", function( len, ply )
 	local self = net.ReadEntity()
 	local item = net.ReadInt( 15 )
-	local name = ItemNPC[item].Name
-	local price = ItemNPC[item].Price
+	local name = ItemNPC[item].Name or "Invalid Item"
+	local price = ItemNPC[item].Price or 0
 	local max = ItemNPC[item].Max
 	local canBuy = ItemNPC[item].CanBuy
 	local give = ItemNPC[item].Give
@@ -79,7 +79,7 @@ net.Receive( "CreateItem", function( len, ply )
 			Notify( ply, 1, 6, "Global limit reached. Remove some instances of this entity to spawn it again." )
 			return
 		end
-		local pos = offset and offset or vector_origin
+		local pos = offset or vector_origin
 		local e = ents.Create( class )
 		e:SetPos( self:GetPos() + pos )
 		e:Spawn()
