@@ -33,7 +33,7 @@ local function DrawItemMenu( ent ) --Panel that draws the main menu
 
 	local listframe = vgui.Create( "DScrollPanel", mainframe )
 	listframe:Dock( FILL )
-	for k,v in pairs( ItemNPC ) do
+	for k,v in ipairs( ItemNPC ) do
 		if v.Type != type then
 			continue
 		end
@@ -44,8 +44,8 @@ local function DrawItemMenu( ent ) --Panel that draws the main menu
 		itembackground:Dock( TOP )
 		itembackground:DockMargin( 0, 0, 0, 10 )
 		itembackground:Center()
-		itembackground.Paint = function()
-			draw.RoundedBox( 0, 0, 0, itembackground:GetWide(), itembackground:GetTall(), Color( menuColor.r, menuColor.g, menuColor.b, 255 ) )
+		itembackground.Paint = function( self, w, h )
+			draw.RoundedBox( 0, 0, 0, w, h, Color( menuColor.r, menuColor.g, menuColor.b, 255 ) )
 		end
 
 		local mainbuttons = vgui.Create( "DButton", itembackground )
