@@ -94,11 +94,13 @@ local function DrawItemMenu( ent ) --Panel that draws the main menu
 			end
 		end
 
+		local modifiedPrice = hook.Run( "ItemNPC_ModifyPrice", LocalPlayer(), ent, k )
+		local realPrice = modifiedPrice or v.Price or 0
 		local itemprice = vgui.Create( "DLabel", itembackground )
 		itemprice:SetFont( "Trebuchet24" )
 		itemprice:SetColor( menuTextColor )
-		if v.Price and v.Price > 0 then
-			itemprice:SetText( "Price: $"..v.Price )
+		if realPrice > 0 then
+			itemprice:SetText( "Price: $"..realPrice )
 		else
 			itemprice:SetText( "Price: Free" )
 		end
