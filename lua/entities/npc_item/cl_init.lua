@@ -1,4 +1,4 @@
-include('shared.lua')
+include( "shared.lua" )
 
 surface.CreateFont( "ItemNPCTitleFont", {
 	font = "Arial",
@@ -10,16 +10,25 @@ function ENT:Draw()
 	self:DrawModel()
 end
 
+local defaultMenuColor = Color( 49, 53, 61, 200 )
+local defaultMenuTextColor = color_white
+local defaultButtonColor = Color( 230, 93, 80, 255 )
+local defaultButtonTextColor = color_white
 local function DrawItemMenu( ent ) --Panel that draws the main menu
 	local type = ent:GetNPCType()
 	local ply = LocalPlayer()
+	local menuColor = ItemNPCType[type].MenuColor or defaultMenuColor
+	local menuTextColor = ItemNPCType[type].MenuTextColor or defaultMenuTextColor
+	local buttonColor = ItemNPCType[type].ButtonColor or defaultButtonColor
+	local buttonTextColor = ItemNPCType[type].ButtonTextColor or defaultButtonTextColor
+	local name = ItemNPCType[type].Name or "Invalid NPC"
 	local mainframe = vgui.Create( "DFrame" )
-	mainframe:SetTitle( ItemNPCType[type].Name )
+	mainframe:SetTitle( name )
 	mainframe:SetSize( 500, 800 )
 	mainframe:Center()
 	mainframe:MakePopup()
 	mainframe.Paint = function( self, w, h )
-		draw.RoundedBox( 0, 0, 0, w, h, ItemNPCType[type].MenuColor )
+		draw.RoundedBox( 0, 0, 0, w, h, menuColor )
 	end
 
 	local listframe = vgui.Create( "DScrollPanel", mainframe )
@@ -28,6 +37,7 @@ local function DrawItemMenu( ent ) --Panel that draws the main menu
 		if v.Type != type then
 			continue
 		end
+		local itemName = v.Name or "Invalid Item"
 		local itembackground = vgui.Create( "DPanel", listframe )
 		itembackground:SetPos( 0, 10 )
 		itembackground:SetSize( 450, 100 )
@@ -35,16 +45,16 @@ local function DrawItemMenu( ent ) --Panel that draws the main menu
 		itembackground:DockMargin( 0, 0, 0, 10 )
 		itembackground:Center()
 		itembackground.Paint = function()
-			draw.RoundedBox( 0, 0, 0, itembackground:GetWide(), itembackground:GetTall(), Color( ItemNPCType[type].MenuColor.r, ItemNPCType[type].MenuColor.g, ItemNPCType[type].MenuColor.b, 255 ) )
+			draw.RoundedBox( 0, 0, 0, itembackground:GetWide(), itembackground:GetTall(), Color( menuColor.r, menuColor.g, menuColor.b, 255 ) )
 		end
 
 		local mainbuttons = vgui.Create( "DButton", itembackground )
-		mainbuttons:SetText( v.Name )
-		mainbuttons:SetTextColor( ItemNPCType[type].ButtonTextColor )
+		mainbuttons:SetText( itemName )
+		mainbuttons:SetTextColor( buttonTextColor )
 		mainbuttons:SetFont( "ItemNPCTitleFont" )
 		mainbuttons:Dock( TOP )
 		mainbuttons.Paint = function( self, w, h )
-			draw.RoundedBox( 0, 0, 0, w, h, ItemNPCType[type].ButtonColor )
+			draw.RoundedBox( 0, 0, 0, w, h, buttonColor )
 		end
 		mainbuttons.DoClick = function()
 			net.Start( "CreateItem" )
@@ -64,7 +74,7 @@ local function DrawItemMenu( ent ) --Panel that draws the main menu
 				mainframe:ToggleVisible()
 
 				local modelpanel = vgui.Create( "DFrame" )
-				modelpanel:SetTitle( v.Name )
+				modelpanel:SetTitle( itemName )
 				modelpanel:SetSize( 350, 350 )
 				modelpanel:Center()
 				modelpanel:MakePopup()
@@ -72,7 +82,7 @@ local function DrawItemMenu( ent ) --Panel that draws the main menu
 					mainframe:ToggleVisible()
 				end
 				modelpanel.Paint = function( self, w, h )
-					draw.RoundedBox( 0, 0, 0, w, h, ItemNPCType[type].MenuColor )
+					draw.RoundedBox( 0, 0, 0, w, h, menuColor )
 				end
 
 				local modelpanel2 = vgui.Create( "DAdjustableModelPanel", modelpanel )
@@ -86,18 +96,18 @@ local function DrawItemMenu( ent ) --Panel that draws the main menu
 
 		local itemprice = vgui.Create( "DLabel", itembackground )
 		itemprice:SetFont( "Trebuchet24" )
-		itemprice:SetColor( ItemNPCType[type].MenuTextColor )
-		if v.Price <= 0 then
-			itemprice:SetText( "Price: Free" )
+		itemprice:SetColor( menuTextColor )
+		if v.Price and v.Price > 0 then
+			itemprice:SetText( "Price: $"..v.Price )
 		else
-			itemprice:SetText( "Price: "..DarkRP.formatMoney( v.Price ) )
+			itemprice:SetText( "Price: Free" )
 		end
 		itemprice:SizeToContents()
 
 		local itemdesc = vgui.Create( "DLabel", itembackground )
 		itemdesc:SetFont( "Trebuchet18" )
-		itemdesc:SetColor( ItemNPCType[type].MenuTextColor )
-		itemdesc:SetText( "Description: "..v.Description )
+		itemdesc:SetColor( menuTextColor )
+		itemdesc:SetText( "Description: "..( v.Description or "No description available." ) )
 		itemdesc:SetWrap( true )
 
 		if v.Model then
