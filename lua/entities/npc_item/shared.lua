@@ -30,6 +30,7 @@ ItemNPCType[1] = {
 ItemNPC[1] = {
 	Name = "Crowbar",					--Name of the item, different from the item's entity name
 	Description = "Tool you can swing",	--Description of the item
+	Model = "models/weapons/crowbar.mdl"--Model of the item to be displayed in the list
 	Price = 100,						--Price of the item (DarkRP only)
 	Max = 20,							--Amount of this item that players are allowed to purchase
 	Type = 1,							--NPC type that this item will be associated with
