@@ -34,8 +34,8 @@ ItemNPC[1] = {
 	Price = 100,						--Price of the item (DarkRP only)
 	Max = 20,							--Amount of this item that players are allowed to purchase
 	Type = 1,							--NPC type that this item will be associated with
-	CanBuy = function( ply, self )		--Function to check if players can purchase the item
-		return ply:Team() != TEAM_MAYOR
+	CanBuy = function( ply, self )		--Function to check if players can purchase the item, accepts fail message as 2nd return value
+		return ply:Team() == TEAM_MAYOR, "Only the mayor can buy this item"
 	end,
 	Give = "weapon_crowbar",			--Class of the weapon that the player should receive upon purchase, don't use for regular entities
 	SpawnClass = "weapon_shipment",		--Entity class that should be spawned upon purchase, not recommended for weapons

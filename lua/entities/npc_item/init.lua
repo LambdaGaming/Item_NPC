@@ -59,14 +59,22 @@ net.Receive( "CreateItem", function( len, ply )
 	local name = ItemNPC[item].Name or "Invalid Item"
 	local price = ItemNPC[item].Price or 0
 	local max = ItemNPC[item].Max
-	local canBuy = ItemNPC[item].CanBuy
+	local canBuyFunc = ItemNPC[item].CanBuy
 	local give = ItemNPC[item].Give
 	local class = ItemNPC[item].SpawnClass
 	local offset = ItemNPC[item].SpawnOffset
 	local spawnFunc = ItemNPC[item].SpawnFunc
 	local spawnOverride = ItemNPC[item].SpawnOverride
 	local money = DarkRP and ply:getDarkRPVar( "money" ) or nil
-	if canBuy and canBuy( ply, self ) == false then return end
+	if canBuyFunc then
+		local canBuy, err = canBuyFunc( ply, self )
+		if canBuy == false then
+			if err then
+				Notify( ply, 1, 6, err )
+			end
+			return
+		end
+	end
 	if hook.Run( "ItemNPC_CanBuy", ply, self, item ) == false then return end
 	local newPrice = hook.Run( "ItemNPC_ModifyPrice", ply, self, item )
 	price = newPrice or price
