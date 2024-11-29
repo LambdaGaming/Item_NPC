@@ -111,4 +111,4 @@ net.Receive( "CreateItem", function( len, ply )
 	end
 end )
 
-print( "Item NPC v2.0 by OPGman successfully loaded." )
+print( "Item NPC v2.1 by OPGman successfully loaded." )

@@ -8,6 +8,7 @@ surface.CreateFont( "ItemNPCTitleFont", {
 
 function ENT:Draw()
 	self:DrawModel()
+	hook.Run( "ItemNPC_OnDraw", self )
 end
 
 local defaultMenuColor = Color( 49, 53, 61, 200 )
