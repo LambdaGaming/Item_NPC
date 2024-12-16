@@ -21,7 +21,6 @@ function ENT:Initialize()
 	self:SetSolid( SOLID_BBOX )
 	self:SetCollisionGroup( COLLISION_GROUP_PLAYER )
 	self:SetUseType( SIMPLE_USE )
-	
     local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
 		phys:Wake()
@@ -104,11 +103,13 @@ net.Receive( "CreateItem", function( len, ply )
 		hook.Run( "ItemNPC_PostBuy", ply, self, item, price, e )
 	end
 	Notify( ply, 0, 6, "You have purchased a "..name.."." )
-	if DarkRP then
-		ply:addMoney( -price )
-	else
-		ply:RemoveFunds( price )
+	if price > 0 then
+		if DarkRP then
+			ply:addMoney( -price )
+		else
+			ply:RemoveFunds( price )
+		end
 	end
 end )
 
-print( "Item NPC v2.1 by OPGman successfully loaded." )
+print( "Item NPC v2.1.1 by OPGman successfully loaded." )
