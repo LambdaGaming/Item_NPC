@@ -16,10 +16,8 @@ ItemNPCType = {} --Initializes the type table, don't touch
 ItemNPCType[1] = {
 	Name = "DarkRP Weapon Dealer", 				 --Name of the NPC
 	Model = "models/breen.mdl",					 --Model of the NPC
-	MenuColor = Color( 49, 53, 61, 200 ),		--Color of the menu background
-	MenuTextColor = color_white, 				 --Color of the menu background text
-	ButtonColor = Color( 230, 93, 80, 255 ),	--Color of the buttons
-	ButtonTextColor = color_white, 				 --Color of the button text
+	MenuColor = Color( 49, 53, 61, 200 ),		--Color of the item background
+	MenuTextColor = color_white, 				 --Color of the item text
 	CanUse = function( ply ) return true end,	 --Function to check if player can use NPC
 	Anim = 20									 --Animation sequence of the model
 }
