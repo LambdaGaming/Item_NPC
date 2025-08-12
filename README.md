@@ -22,10 +22,5 @@ Scope: Server
 Arguments: `Player` ply, `Entity` npc, `Number` itemIndex, `Number` finalPrice, `Entity` spawnedItem  
 Called after the purchase is completed. The finalPrice argument is what the price ends up being after ItemNPC_ModifyPrice is called. The spawnedItem argument will only be passed if the item purchased is a valid entity.
 
-### ItemNPC_OnDraw
-Scope: Client
-Arguments: `Entity` npc
-Called every time the ENT:Draw function is called on the NPC. Can be used for additional rendering such as overhead text.
-
 # Issues & Pull Requests
  If you would like to contribute to this repository by creating an issue or pull request, please refer to the [contributing guidelines.](https://lambdagaming.github.io/contributing.html)

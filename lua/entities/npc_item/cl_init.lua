@@ -1,8 +1,29 @@
 include( "shared.lua" )
 
+surface.CreateFont( "ItemNPCOverheadText", {
+	font = "Circular Std Bold",
+	size = 200,
+	weight = 800
+} )
+
+local offset = Vector( 0, 0, 80 )
 function ENT:Draw()
 	self:DrawModel()
-	hook.Run( "ItemNPC_OnDraw", self )
+	local origin = self:GetPos()
+	local ply = LocalPlayer()
+	if ply:GetPos():DistToSqr( origin ) >= 589824 then return end
+
+	local type = self:GetNPCType()
+	local name = ItemNPCType[type].Name or "Invalid NPC"
+	local pos = origin + offset
+	local ang = ( ply:EyePos() - pos ):Angle()
+	ang.p = 0
+	ang:RotateAroundAxis( ang:Right(), 90 )
+	ang:RotateAroundAxis( ang:Up(), 90 )
+	ang:RotateAroundAxis( ang:Forward(), 180 )
+	cam.Start3D2D( pos, ang, 0.035 )
+		draw.SimpleText( name, "ItemNPCOverheadText", 0, 0, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP )
+	cam.End3D2D()
 end
 
 local defaultMenuColor = Color( 49, 53, 61, 200 )
